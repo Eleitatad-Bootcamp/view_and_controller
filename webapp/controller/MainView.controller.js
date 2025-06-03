@@ -55,6 +55,30 @@ sap.ui.define([
             // Show selected mode of payment in MessageToast
             var sMOPText = oEvent.getSource().getSelectedItem().getText();
             MessageToast.show("Selected Mode of Payment: " + sMOPText);
-        }
+        },
+         onAddItem: function (){
+                // Comment this code for now
+                // var oTextBundle = this.getOwnerComponent().getModel("i18n").getResourceBundle();
+                // var sMsg = oTextBundle.getText("addButtonMsg");
+                        // this.fnDisplayMsg(sMsg);
+
+                // Instantiate the fragment
+
+                // create dialog lazily
+                if (!this.oDialog) {
+                    // By using loadFragment, we are adding the fragment as a dependent to the View
+                    // By doing so, we can use the functions inside the view's controller
+                    this.oDialog = this.loadFragment({
+                        name: "com.acn.training.excer1tatad.fragment.ProductDialog"
+                    });
+                } 
+                this.oDialog.then(function(oDialog) {
+                    oDialog.open();
+                });
+            },
+            onCloseDialog: function (){
+                this.getView().byId("idProductDialog").close();
+            }
+
     });
 });
