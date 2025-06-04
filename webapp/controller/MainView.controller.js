@@ -16,21 +16,30 @@ sap.ui.define([
         },
 
         // Checkout button handler
-        onPressCheckout: function () {
-            var oView = this.getView();
-            var sFirstName = oView.byId("idInptFName").getValue();
-            var sLastName = oView.byId("idInptLName").getValue();
+        onPressCheckout: function (){
+            var oInputFName = this.getView().byId("idInptFName");
+            var oInputLName = this.getView().byId("idInptLName");
+            var oInputFNameValue = oInputFName.getValue();
+            var oInputLNameValue = oInputLName.getValue();
+            var oRouter = this.getOwnerComponent().getRouter();
 
-            // Check if First Name or Last Name are empty
-            if (!sFirstName || !sLastName) {
-                var sErrorMsg = this.getView().getModel("i18n").getResourceBundle().getText("checkoutErrorMsg");
-                MessageToast.show(sErrorMsg);
+            // Check if first name and last name is blank
+            if (oInputFNameValue === "" || oInputLNameValue === ""){
+               
+            // set value state to Error
+                oInputFName.setValueState("Error");
+                oInputLName.setValueState("Error");
             } else {
-                // Proceed with checkout logic
-                MessageToast.show("Proceeding with checkout...");
+                oInputFName.setValueState("None");
+                oInputLName.setValueState("None");
+
+                //Navigate to review page passing first
+                oRouter.navTo("RouteReviewPage", {
+                    firstName: oInputFNameValue
+                });
+
             }
         },
-
         // Mode of Payment change handler
         onChangeMOP: function (oEvent) {
             var sSelectedKey = oEvent.getSource().getSelectedKey();
